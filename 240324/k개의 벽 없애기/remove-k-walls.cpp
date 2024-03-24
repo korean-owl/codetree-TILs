@@ -19,17 +19,20 @@ bool InRange(int x, int y){
     return x>=0 && x<n && y>= 0 &&y<n  && board[x][y]==false ;
 }
 void ShowArr(){
-    for(int i=0;i<n;i++){
+    /*for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
             cout<<arr[i][j]<<" ";
         }cout<<endl;
     }cout<<endl;
-    
+    */
+    cout<<board[position[1].first][position[1].first]<<" "<<endl;
     for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
             cout<<board[i][j]<<" ";
         }cout<<endl;
     }cout<<endl;
+
+
 }
 int Simualte(){
     int sum=0;
@@ -43,7 +46,11 @@ int Simualte(){
 
         while(!q1.empty()){
             int curr_x= q1.front().first, curr_y = q1.front().second;
-            
+            if( board[position[1].first][position[1].second] == true ){
+           // cout<<"%%%%%%%%%%%%%%%"<<endl<<sum<<endl;
+           // ShowArr();
+            return sum -1;
+        }
 
             q1.pop();
             
@@ -60,7 +67,7 @@ int Simualte(){
         }
         //cout<<sum<<endl;
       
-        return sum+1;
+        return sum -1;
         
         
        
@@ -81,12 +88,13 @@ void BackTracking(int num, int curr){
         int sum=Simualte();
         
         //cout<<sum<<endl;
-        //ShowArr();
+       //ShowArr();
        
-        if(sum!=0 && answer>sum  && board[position[1].first][position[1].second] == true ){
-            cout<<"%%%%%%%%%%%%%%%"<<endl<<sum<<endl;
+        if( board[position[1].first][position[1].second] == true ){
+            //cout<<"%%%%%%%%%%%%%%%"<<endl<<sum<<endl;
             //ShowArr();
-            answer=sum;
+            if(answer>sum)
+                answer=sum;
         }
             
             
@@ -115,6 +123,10 @@ int main() {
         }
 
     cin>>position[0].first>>position[0].second >> position[1].first>>position[1].second;
+    position[0].first -=1;
+    position[1].first -=1;
+    position[0].second -= 1;
+    position[1].second -= 1;
     //cout<<"#####"<<endl;
     for(int i=0;i<wall.size();i++){
         //cout<<"wall "<<i+1<<": "<<wall[i].first<<","<<wall[i].second<<endl;;
