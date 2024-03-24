@@ -19,12 +19,12 @@ bool InRange(int x, int y){
     return x>=0 && x<n && y>= 0 &&y<n  && board[x][y]==false ;
 }
 void ShowArr(){
-    /*for(int i=0;i<n;i++){
+    for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
             cout<<arr[i][j]<<" ";
         }cout<<endl;
     }cout<<endl;
-    */
+    
     cout<<board[position[1].first][position[1].first]<<" "<<endl;
     for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
@@ -89,10 +89,12 @@ void BackTracking(int num, int curr){
         
         //cout<<sum<<endl;
        //ShowArr();
+
+      // cout<<num<<endl;
        
         if( board[position[1].first][position[1].second] == true ){
             //cout<<"%%%%%%%%%%%%%%%"<<endl<<sum<<endl;
-            //ShowArr();
+            ShowArr();
             if(answer>sum)
                 answer=sum;
         }
@@ -103,7 +105,7 @@ void BackTracking(int num, int curr){
         for(int i=curr;i<wall.size();i++){
             //v1.push_back({wall[i].first,wall[i].second});
             arr[wall[i].first][wall[i].second]=0;
-            BackTracking(n,curr+1);
+            BackTracking(num,curr+1);
             arr[wall[i].first][wall[i].second]=1;
             //v1.pop_back();
         }
@@ -132,6 +134,7 @@ int main() {
         //cout<<"wall "<<i+1<<": "<<wall[i].first<<","<<wall[i].second<<endl;;
     }//cout<<endl;
     //cout<<wall.size()<<"@@@"<<endl;
+    //cout<<k<<endl;
     BackTracking(k,0);
 
     if(answer ==100001 )
