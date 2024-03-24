@@ -122,7 +122,7 @@ int main() {
     //cout<<wall.size()<<"@@@"<<endl;
     BackTracking(k,0);
 
-    if(answer ==0 )
+    if(answer ==10001 )
         cout<<-1;
     else
         cout<<answer;
