@@ -16,7 +16,7 @@ pair<int,int> position[2];
 int n, k;
 int answer=100001;
 bool InRange(int x, int y){
-    return x>=0 & x<n && y>= 0 &&y<n  && board[x][y]==false ;
+    return x>=0 && x<n && y>= 0 &&y<n  && board[x][y]==false ;
 }
 void ShowArr(){
     for(int i=0;i<n;i++){
@@ -43,9 +43,7 @@ int Simualte(){
 
         while(!q1.empty()){
             int curr_x= q1.front().first, curr_y = q1.front().second;
-            if(curr_x == position[1].first && curr_y == position[1].second){
-                return sum;
-            }
+            
 
             q1.pop();
             
@@ -84,8 +82,14 @@ void BackTracking(int num, int curr){
         
         //cout<<sum<<endl;
         //ShowArr();
-        if(sum!=0 && answer>sum )
+       
+        if(sum!=0 && answer>sum  && board[position[1].first][position[1].second] == true ){
+            cout<<"%%%%%%%%%%%%%%%"<<endl<<sum<<endl;
+            //ShowArr();
             answer=sum;
+        }
+            
+            
     }
     else{
         for(int i=curr;i<wall.size();i++){
