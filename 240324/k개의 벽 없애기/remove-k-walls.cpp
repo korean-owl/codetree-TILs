@@ -94,7 +94,7 @@ void BackTracking(int num, int curr){
        
         if( board[position[1].first][position[1].second] == true ){
             //cout<<"%%%%%%%%%%%%%%%"<<endl<<sum<<endl;
-            ShowArr();
+           // ShowArr();
             if(answer>sum)
                 answer=sum;
         }
