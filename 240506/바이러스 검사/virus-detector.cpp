@@ -22,16 +22,16 @@ using namespace std;
 2. 고객의 수
 3. 검색 가능 팀장 최대, 팀원 최대
 */
-int storeNum;
-int leader, follwer;
+long storeNum;
+long leader, follwer;
 vector<int>store;
-int answer;
+long answer;
 void Input()
 {
 	cin >> storeNum;
 	for (int i = 0; i < storeNum; i++)
 	{
-		int people;
+		long people;
 		cin >> people;
 		store.push_back(people);
 	}
