@@ -32,16 +32,16 @@ n개의 식당의 고객들을 모두 검사하기 위한 검사자의 최소의
 
 using namespace std;
 
-int storeNum;
-int leaderScanNum, followerScanNum;
+long storeNum;
+long leaderScanNum, followerScanNum;
 vector<int>store;
-int answer;
+long answer;
 void Input()
 {
     cin >> storeNum;
     for (int i = 0; i < storeNum; i++)
     {
-        int client;
+        long client;
         cin >> client;
         store.push_back(client);
     }
