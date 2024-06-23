@@ -50,28 +50,29 @@ public:
 		:rx(irx),ry(iry),bx(ibx),by(iby),cnt(icnt)
 	{}
 };
+INFO start; //시작 위치
+char map[10][11]; //맨끝개행문자
 int n, m;
-char board[11][11];
-char tempBoard[101][101];
-const int dx[4] = { 0,1,0,-1 };
-const int dy[4] = { 1,0,-1,0 };
+char map[11][11];
+//const int dx[4] = { 0,1,0,-1 };
+//const int dy[4] = { 1,0,-1,0 };
 int answer;
 bool CanGo(int x, int y)
 {
-	return board[x][y] != '#' && board[x][y] != '0';
+	return map[x][y] != '#' && map[x][y] != '0';
 }
 void InPut()
 {
 	cin >> n >> m;
 	for (int i = 0; i < n; i++)
 		for (int j = 0; j < m; j++) {
-			cin >> board[i][j];
-			if (board[i][j] == 'R')
+			cin >> map[i][j];
+			if (map[i][j] == 'R')
 			{
 				start.rx = i;
 				start.ry = j;
 			}
-			else if (board[i][j] == 'B')
+			else if (map[i][j] == 'B')
 			{
 				start.bx = i;
 				start.by = j;
@@ -79,14 +80,15 @@ void InPut()
 		}
 	start.cnt = 0;
 }
-INFO start;
-char board[10][11];
 int BFS()
 {
+	const int dy[] = { -1,1,0,0 };
+	const int dx[] = { 0,0,-1,1 };
+
 	bool visited[11][11][11][11] = { 0, };
 	queue<INFO>q ;
 	q.push(start);
-	visited[start.rx][start.ry][start.bx][start.by] = true;
+	visited[start.ry][start.rx][start.by][start.bx] = true;
 
 	int ans = -1;
 	while (!q.empty())
@@ -99,7 +101,7 @@ int BFS()
 		//View(currRed, currBlue, currCnt);
 		
 		if (curr.cnt > 10) break;
-		if (board[curr.rx][curr.ry] == 'O' && board[curr.bx][curr.by] != 'O')
+		if (map[curr.ry][curr.rx] == 'O' && map[curr.by][curr.bx] != 'O')
 		{
 			ans = curr.cnt;
 				break;
@@ -115,29 +117,29 @@ int BFS()
 			// red 구슬 한 방향으로 이동
 			while (true)
 			{
-				if (board[nrx][nry] != '#' && board[nrx][nry] != '0')//(CanGo(nr.x, nr.y))
+				if (map[nry][nrx] != '#' && map[nry][nrx] != '0')//(CanGo(nr.x, nr.y))
 				{
 					nrx += dx[i];
 					nry += dy[i];
 				}
 				else {
-					nrx = (board[nrx][nry] == '#') ? (nrx -= dx[i]) : nrx;
-					nry = (board[nrx][nry] == '#') ? (nry-= dy[i])  : nry;
+					nrx = (map[nry][nrx] == '#') ? (nrx - dx[i]) : nrx;
+					nry = (map[nry][nrx] == '#') ? (nry - dy[i])  : nry;
 					break;
 				}
 			}
 			// blue 구슬 한 방향으로 이동
 			while (true)
 			{
-				if (board[nbx][nby] != '#' && board[nbx][nby] != '0')//(CanGo(nb.x, nb.y))
+				if (map[nbx][nby] != '#' && map[nbx][nby] != '0')//(CanGo(nb.x, nb.y))
 				{
 					nbx += dx[i];
 					nby += dy[i];
 				}
 				else {
 
-					nbx = (board[nbx][nby] == '#') ? (nbx -= dx[i]) : nbx;
-					nby = (board[nbx][nby] == '#') ? (nby -= dy[i]) : nby;
+					nbx = (map[nby][nbx] == '#') ? (nbx - dx[i]) : nbx;
+					nby = (map[nby][nbx] == '#') ? (nby - dy[i]) : nby;
 					break;
 				}
 			}
@@ -145,7 +147,7 @@ int BFS()
 			if (nry == nby && nrx == nbx)
 			{
 				//겹쳤지만 구멍이 아닐때 
-				if (board[nrx][nry] != 'O')
+				if (map[nrx][nry] != 'O')
 				{
 					int redDist = abs(nrx - curr.rx) + abs(nry - curr.ry);
 					int blueDist = abs(nbx - curr.bx) + abs(nby - curr.by);
@@ -163,9 +165,9 @@ int BFS()
 				}
 			}
 			// 4. Queue에 들어갈 수 있는 조건 
-			if (visited[nrx][nry][nbx][nby] == false )
+			if (visited[nry][nrx][nby][nbx] == false )
 			{
-				visited[nrx][nry][nbx][nby] = true;
+				visited[nry][nrx][nby][nbx] = true;
 				INFO next;
 				next.ry = nrx;
 				next.rx = nry;
@@ -181,7 +183,24 @@ int BFS()
 }
 int main()
 {
-	InPut();
+	//InPut();
+	int n, m;
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		cin >> map[i];
+	}
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (map[i][j] == 'R') {
+				start.ry = i; start.rx = j;
+			}
+			if (map[i][j] == 'B') {
+				start.by = i; start.bx = j;
+			}
+		}
+	}
+	start.cnt = 0;
 	answer = BFS();
 
 	cout << answer << endl;
