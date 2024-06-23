@@ -45,7 +45,7 @@ public:
 	{}
 };
 int n, m;
-char board[101][101];
+char board[11][11];
 char tempBoard[101][101];
 queue<pair<pair<Marker, Marker>, int>>q1;
 Marker red;
@@ -78,11 +78,13 @@ void InPut()
 			{
 				red.x = i;
 				red.y = j;
+				board[i][j] = '.';
 			}
 			else if (board[i][j] == 'B')
 			{
 				blue.x = i;
 				blue.y = j;
+				board[i][j] = '.';
 			}
 			else if (board[i][j] == 'O')
 			{
@@ -93,13 +95,36 @@ void InPut()
 
 	answer = -1;
 }
+void View(Marker m1, Marker m2 , int cnt)
+{
+	cout << cnt<<"번째 "<<endl;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			if (m1.x == i && m1.y == j)
+			{
+				cout << "R";
+			}
+			else if(m2.x == i && m2.y == j)
+			{
+				cout << "B";
+			}
+			else
+			{
+				cout << board[i][j];
+			}
+		}cout << endl;
+	}
+	cout << endl;
+}
 int BFS()
 {
-	bool visited[10][10][10][10] = { 0, };
+	bool visited[11][11][11][11] = { 0, };
 	visited[red.x][red.y][blue.x][blue.y] = true;
 	q1.push({ {red,blue},0 });
 	int ans = -1;
-	while (q1.empty())
+	while (!q1.empty())
 	{
 		//1. 정보 받기
 		Marker currRed, currBlue;
@@ -108,13 +133,16 @@ int BFS()
 		int currCnt = q1.front().second;
 		q1.pop();
 		
-		// 끝나는  조건
+		// 2. 끝나는  조건
+		//View(currRed, currBlue, currCnt);
 		if (currCnt >= 10) break;
-		if (board[currRed.x][currRed.y] == '0' && board[currBlue.x][currBlue.y] != '0')
+		if (board[currRed.x][currRed.y] == 'O' && board[currBlue.x][currBlue.y] != 'O')
 		{
 			ans = currCnt;
 				break;
 		}
+		
+		//3. 방향을 가진 Next 생성
 		for (int i = 0; i < 4; i++)// 4 방향 모두 queue에 넣어야함.
 		{
 			Marker nr(currRed.x, currRed.y);
@@ -122,7 +150,7 @@ int BFS()
 			// red 구슬 한 방향으로 이동
 			while (true)
 			{
-				if (CanGo(nr.x, nr.y))
+				if (board[nr.x][nr.y] != '#' && board[nr.x][nr.y] != '0')//(CanGo(nr.x, nr.y))
 				{
 					nr.x+= dx[i];
 					nr.y += dy[i];
@@ -134,17 +162,18 @@ int BFS()
 				}
 			}
 
-			// red 구슬 한 방향으로 이동
+			// blue 구슬 한 방향으로 이동
 			while (true)
 			{
-				if (CanGo(nb.x, nb.y))
+				if (board[nb.x][nb.y] != '#' && board[nb.x][nb.y] != '0')//(CanGo(nb.x, nb.y))
 				{
 					nb.x += dx[i];
 					nb.y += dy[i];
 				}
 				else {
-					nb.x = (board[nr.x][nr.y] == '#') ? (nb.x -= dx[i]) : nb.x;
-					nb.y = (board[nr.x][nr.y] == '#') ? (nb.y -= dx[i]) : nb.y;
+
+					nb.x = (board[nb.x][nb.y] == '#') ? (nb.x -= dx[i]) : nb.x;
+					nb.y = (board[nb.x][nb.y] == '#') ? (nb.y -= dy[i]) : nb.y;
 					break;
 				}
 			}
@@ -152,7 +181,7 @@ int BFS()
 			if (nr.y == nb.y && nr.x == nb.x)
 			{
 				//겹쳤지만 구멍이 아닐때 
-				if (board[nr.x][nr.y] != '0')
+				if (board[nr.x][nr.y] != 'O')
 				{
 					int redDist = abs(nr.x - currRed.x) + abs(nr.y - currRed.y);
 					int blueDist = abs(nb.x - currBlue.x) + abs(nb.y - currBlue.y);
@@ -169,7 +198,8 @@ int BFS()
 					}
 				}
 			}
-			if (visited[nr.x][nr.y][nb.x][nb.y] == false)
+			// 4. Queue에 들어갈 수 있는 조건 
+			if (visited[nr.x][nr.y][nb.x][nb.y] == false && board[nb.x][nb.y] != 'O')
 			{
 				visited[nr.x][nr.y][nb.x][nb.y] = true;
 				q1.push({ { nr,nb }, currCnt + 1 });
@@ -182,10 +212,10 @@ int BFS()
 }
 int main()
 {
-	cout << answer << endl;
+	//cout << answer << endl;
 	InPut();
 
-	cout << answer << endl;
+	//cout << answer << endl;
 	answer = BFS();
 
 	cout << answer << endl;
