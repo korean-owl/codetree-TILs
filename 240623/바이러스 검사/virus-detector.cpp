@@ -52,8 +52,8 @@ void Simulate()
 {
     for (int i = 0; i < store.size(); i++)
     {
-        cout << i << "번째 : ";
-        cout << store[i] << " ,";
+        //cout << i << "번째 : ";
+       // cout << store[i] << " ,";
         if (store[i] > leaderScanNum)
         {
             answer++;
@@ -75,7 +75,7 @@ void Simulate()
             answer++;
         }
 
-        cout << answer<< endl;
+       // cout << answer<< endl;
     }
 
 
