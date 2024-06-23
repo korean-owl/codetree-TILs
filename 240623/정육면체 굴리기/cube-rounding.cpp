@@ -151,14 +151,14 @@ void Simulate()
 			}
 				
 			
-			
+			cout << cube.dice[5] << endl;
 		}
 		//cout <<"방향: " << dir << endl;		
 		//for (int i = 0; i < 6; i++) cout << cube.dice[i] << " ";
 		//cout << endl;
 		//View();
 
-		cout << cube.dice[5] << endl;
+		
 	}
 	
 
