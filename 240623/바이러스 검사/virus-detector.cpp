@@ -31,6 +31,7 @@ n개의 식당의 고객들을 모두 검사하기 위한 검사자의 최소의
 #include<vector>
 
 using namespace std;
+
 int storeNum;
 int leaderScanNum, followerScanNum;
 vector<int>store;
@@ -76,6 +77,9 @@ void Simulate()
 
 int main()
 {
+
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr); std::cout.tie(nullptr);
     Input();
     Simulate();
 
