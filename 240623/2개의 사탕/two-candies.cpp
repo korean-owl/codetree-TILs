@@ -36,10 +36,10 @@ int BFS() {
     const int dy[] = {-1, 1, 0, 0};
     const int dx[] = {0, 0, -1, 1};
 
-    int visited[10][10][10][10] = {0,};
+    bool visited[10][10][10][10] = {false};
     queue<INFO> q;
     q.push(start);
-    visited[start.ry][start.rx][start.by][start.bx] = 1;
+    visited[start.ry][start.rx][start.by][start.bx] = true;
 
     int ans = -1;
     while (!q.empty()) {
@@ -103,7 +103,7 @@ int BFS() {
             }
 
             if (!visited[next_ry][next_rx][next_by][next_bx]) {
-                visited[next_ry][next_rx][next_by][next_bx] = 1;
+                visited[next_ry][next_rx][next_by][next_bx] = true;
                 INFO next = {next_rx, next_ry, next_bx, next_by, cur.count + 1};
                 q.push(next);
             }
