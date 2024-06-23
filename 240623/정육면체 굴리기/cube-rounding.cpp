@@ -63,7 +63,7 @@ bool InRange(int x, int y)
 }
 int main()
 {
-	cin >> n >> m >> cube.x >> cube.y >> cube.playNum;
+	cin >> n >> m >> cube.y >> cube.x >> cube.playNum;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
 			cin >> map[i][j];
@@ -132,7 +132,7 @@ void Simulate()
 
 		int nx = cube.x + dx[dir];
 		int ny = cube.y + dy[dir];
-		if (InRange(nx, ny))
+		if (InRange(ny, nx))
 		{
 			Move((Cube)dir);
 			//1. 위치 설정
@@ -153,10 +153,10 @@ void Simulate()
 			
 			cout << cube.dice[5] << endl;
 		}
-		//cout <<"방향: " << dir << endl;		
-		//for (int i = 0; i < 6; i++) cout << cube.dice[i] << " ";
-		//cout << endl;
-		//View();
+		cout <<"방향: " << dir << endl;		
+		for (int i = 0; i < 6; i++) cout << cube.dice[i] << " ";
+		cout << endl;
+		View();
 
 		
 	}
