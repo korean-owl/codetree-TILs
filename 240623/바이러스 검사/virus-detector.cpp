@@ -8,7 +8,7 @@ n개의 식당 고객들의 체온을 측정하기 위해 필요한 검사자 �
 해석:
   1. 검사자는 팀장,팀원
   2. 가게당 팀장은 Only 1명
-  3. 가게당 필수 팀장 1명 이후 팀원 존재 
+  3. 가게당 필수 팀장 1명 이후 팀원 존재
   4. 담당한 가게에서만 검사 진행
 
 입력 형식
@@ -37,41 +37,46 @@ vector<int>store;
 int answer;
 void Input()
 {
-  cin>>storeNum;
-  for(int i=0; i < storeNum; i++)
-  {
-    int client;
-    cin>>client;
-    store.push_back(client);
-  }
+    cin >> storeNum;
+    for (int i = 0; i < storeNum; i++)
+    {
+        int client;
+        cin >> client;
+        store.push_back(client);
+    }
 
-  cin>>leaderScanNum >> followerScanNum;
+    cin >> leaderScanNum >> followerScanNum;
 }
 
 void Simulate()
 {
-  for(int i=0; i < store.size(); i++)
-  {
-    if(store[i] > leaderScanNum)
+    for (int i = 0; i < store.size(); i++)
     {
-      answer++;
-      store[i]-=leaderScanNum;
-      while(true)
-      {
-        if(store[i] < 0)
+        cout << i << "번째 : ";
+        cout << store[i] << " ,";
+        if (store[i] > leaderScanNum)
         {
-          break;
+            answer++;
+            store[i] -= leaderScanNum;
+            while (true)
+            {
+                if (store[i] <= 0)
+                {
+                    break;
+                }
+
+                store[i] -= followerScanNum;
+                answer++;
+            }
+        }
+        else
+        {
+            store[i] -= leaderScanNum;
+            answer++;
         }
 
-        store[i] -= followerScanNum;
-        answer++;
-      }
+        cout << answer<< endl;
     }
-    else
-    {
-      answer++;
-    }
-  }
 
 
 }
@@ -79,10 +84,10 @@ void Simulate()
 
 int main()
 {
-	Input();
-	Simulate();
+    Input();
+    Simulate();
 
-	cout << answer;
+    cout << answer;
 
-	return 0;
+    return 0;
 }
