@@ -52,22 +52,14 @@ void Simulate()
 {
     for (int i = 0; i < store.size(); i++)
     {
-        //cout << i << "번째 : ";
-       // cout << store[i] << " ,";
+       //cout << i << "번째 : ";
+       //cout << store[i] << " ,";
         if (store[i] > leaderScanNum)
         {
             answer++;
             store[i] -= leaderScanNum;
-            while (true)
-            {
-                if (store[i] <= 0)
-                {
-                    break;
-                }
-
-                store[i] -= followerScanNum;
-                answer++;
-            }
+            long tempAns = store[i] / followerScanNum;
+            answer = (tempAns * followerScanNum < store[i]) ? answer + tempAns + 1 : answer + tempAns;
         }
         else
         {
@@ -75,7 +67,7 @@ void Simulate()
             answer++;
         }
 
-       // cout << answer<< endl;
+       //cout << answer<< endl;
     }
 
 
